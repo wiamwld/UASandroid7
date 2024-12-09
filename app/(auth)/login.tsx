@@ -1,101 +1,138 @@
-import React from "react";
+import React, { useState } from 'react';
 import {
   View,
   Text,
-  StyleSheet,
   TextInput,
   TouchableOpacity,
-  Image,
-} from "react-native";
+  StyleSheet,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
 
-export default function App() {
+export default function LoginScreen() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = () => {
+    if (!username || !password) {
+      Alert.alert('Error', 'Username dan Password harus diisi!');
+      return;
+    }
+    Alert.alert('Login Berhasil', `Selamat datang, ${username}!`);
+  };
+
   return (
-    <View style={styles.container}>
-      {/* Header */}
-      <Text style={styles.welcomeText}>Selamat Datang,</Text>
-      <Text style={styles.titleText}>ABSENSI KITA</Text>
-      <Text style={styles.subtitleText}>
-        Absensi Guru SMA Bustanul Mubtadiin Panguraian-Propopo-Pamekasan
-      </Text>
+    // Menutup Keyboard saat pengguna mengetuk area kosong
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        {/* Header */}
+        <View style={styles.header}>
+          <Text style={styles.welcomeText}>Selamat Datang,</Text>
+          <Text style={styles.title}>ABSENSI KITA</Text>
+          <Text style={styles.subtitle}>
+            Absensi Guru SMA Bustanul Mubtadiin Pangurayan-Propopo-Pamekasan
+          </Text>
+        </View>
 
-      {/* Avatar */}
-      <Image
-        source={{ uri: "https://via.placeholder.com/100" }} // Ganti dengan URL gambar avatar
-        style={styles.avatarImage}
-      />
-
-      {/* Input Fields */}
-      <View style={styles.inputContainer}>
+        {/* Input Fields */}
         <TextInput
-          placeholder="Username ....................................."
           style={styles.input}
+          placeholder="Masukkan Username"
+          placeholderTextColor="#B0B0B0"
+          value={username}
+          onChangeText={setUsername}
         />
         <TextInput
-          placeholder="Password ....................................."
           style={styles.input}
+          placeholder="Masukkan Password"
+          placeholderTextColor="#B0B0B0"
           secureTextEntry
+          value={password}
+          onChangeText={setPassword}
         />
-      </View>
 
-      {/* Login Button */}
-      <TouchableOpacity style={styles.loginButton}>
-        <Text style={styles.loginButtonText}>LOGIN</Text>
-      </TouchableOpacity>
-    </View>
+        {/* Login Button */}
+        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+          <Text style={styles.loginButtonText}>LOGIN</Text>
+        </TouchableOpacity>
+
+        {/* Additional Links */}
+        <TouchableOpacity style={styles.forgotPassword}>
+          <Text style={styles.forgotPasswordText}>Lupa Password?</Text>
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#008000", // Hijau sebagai latar belakang
-    alignItems: "center",
-    paddingTop: 60,
+    backgroundColor: '#1EB854',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  header: {
+    alignItems: 'center',
+    marginBottom: 40,
   },
   welcomeText: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#000",
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#000',
   },
-  titleText: {
-    fontSize: 30,
-    fontWeight: "bold",
-    color: "#000",
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#000',
+    marginVertical: 5,
   },
-  subtitleText: {
-    textAlign: "center",
-    color: "#fff",
+  subtitle: {
     fontSize: 14,
-    marginTop: 10,
-    marginHorizontal: 20,
-  },
-  avatarImage: {
-    width: 100,
-    height: 100,
-    marginTop: 20,
-    marginBottom: 30,
-  },
-  inputContainer: {
-    width: "90%",
+    textAlign: 'center',
+    color: '#000',
     marginTop: 10,
   },
   input: {
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 15,
+    width: '100%',
+    height: 55,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    paddingHorizontal: 15,
     fontSize: 16,
+    marginVertical: 10,
+    borderColor: '#ccc',
+    borderWidth: 1,
   },
   loginButton: {
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 50,
+    width: '100%',
+    height: 55,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 20,
+    borderColor: '#1EB854',
+    borderWidth: 1.5,
   },
   loginButtonText: {
     fontSize: 18,
-    fontWeight: "bold",
-    color: "#008000",
+    fontWeight: 'bold',
+    color: '#1EB854',
+  },
+  forgotPassword: {
+    marginTop: 15,
+  },
+  forgotPasswordText: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#fff',
+    textDecorationLine: 'underline',
   },
 });
