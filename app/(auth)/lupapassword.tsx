@@ -5,7 +5,7 @@ export default function ForgotLoginScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.welcomeText}>Selamat Datang,</Text>
-      <Text style={styles.title}>ABSENSI KITA</Text>
+      <Text style={styles.title}>E-ABSENSI KITA</Text>
       <Text style={styles.subtitle}>
         Masukkan email atau username Anda untuk reset password
       </Text>
@@ -41,18 +41,18 @@ const styles = StyleSheet.create({
   welcomeText: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#000',
+    color: '#fff',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#000',
+    color: '#fff',
     marginVertical: 5,
   },
   subtitle: {
     fontSize: 14,
     textAlign: 'center',
-    color: '#000',
+    color: '#fff',
     marginBottom: 30,
   },
   input: {
