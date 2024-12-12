@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import React, { useState } from 'react';
 import {
   View,
@@ -57,12 +58,14 @@ export default function LoginScreen() {
         />
 
         {/* Login Button */}
-        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+        <TouchableOpacity style={styles.loginButton} onPress={() => { router.replace('/(tabs)/dashboard')}}>
           <Text style={styles.loginButtonText}>LOGIN</Text>
         </TouchableOpacity>
 
         {/* Additional Links */}
-        <TouchableOpacity style={styles.forgotPassword}>
+        <TouchableOpacity style={styles.forgotPassword} 
+        onPress={() => { router.replace('/(auth)/lupapassword')}}
+        >
           <Text style={styles.forgotPasswordText}>Lupa Password?</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>

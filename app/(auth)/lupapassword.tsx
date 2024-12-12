@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
@@ -23,7 +24,9 @@ export default function ForgotLoginScreen() {
       </TouchableOpacity>
 
       {/* Back to Login */}
-      <TouchableOpacity style={styles.backToLoginButton}>
+      <TouchableOpacity style={styles.backToLoginButton} 
+      onPress={() => { router.push('/(auth)/login')}}
+      >
         <Text style={styles.backToLoginText}>Kembali ke Login</Text>
       </TouchableOpacity>
     </View>
