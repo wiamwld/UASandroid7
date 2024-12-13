@@ -10,7 +10,7 @@ export default function ForgotLoginScreen() {
       <Text style={styles.subtitle}>
         Masukkan email atau username Anda untuk reset password
       </Text>
-      
+
       {/* Input Field */}
       <TextInput
         style={styles.input}
@@ -19,13 +19,21 @@ export default function ForgotLoginScreen() {
       />
 
       {/* Reset Password Button */}
-      <TouchableOpacity style={styles.resetButton}>
+      <TouchableOpacity
+        style={styles.resetButton}
+        onPress={() => {
+          router.push("/(auth)/resetpassword");
+        }}
+      >
         <Text style={styles.resetButtonText}>RESET PASSWORD</Text>
       </TouchableOpacity>
 
       {/* Back to Login */}
-      <TouchableOpacity style={styles.backToLoginButton} 
-      onPress={() => { router.push('/(auth)/login')}}
+      <TouchableOpacity
+        style={styles.backToLoginButton}
+        onPress={() => {
+          router.push("/(auth)/login");
+        }}
       >
         <Text style={styles.backToLoginText}>Kembali ke Login</Text>
       </TouchableOpacity>
