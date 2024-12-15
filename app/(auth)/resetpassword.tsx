@@ -6,20 +6,21 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import { useRouter } from "expo-router"; // Make sure to import the router
+import { useRouter } from "expo-router"; // Pastikan router diimpor dengan benar
 
 export default function CreateNewPassword() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const router = useRouter(); // Initialize router
+  const router = useRouter(); // Inisialisasi router
 
   const handleSavePassword = () => {
     if (password !== confirmPassword) {
       alert("Password tidak cocok.");
       return;
     }
-    // Tambahkan logika untuk menyimpan password baru
+    // Logika untuk menyimpan password baru dapat ditambahkan di sini
     alert("Password berhasil diubah.");
+    router.push("/(auth)/login"); // Arahkan ke halaman login setelah password disimpan
   };
 
   return (
@@ -41,16 +42,6 @@ export default function CreateNewPassword() {
       />
       <TouchableOpacity style={styles.button} onPress={handleSavePassword}>
         <Text style={styles.buttonText}>Simpan Password</Text>
-      </TouchableOpacity>
-
-      {/* Back to Login Button */}
-      <TouchableOpacity
-        style={styles.backToLoginButton}
-        onPress={() => {
-          router.push("/(auth)/login");
-        }}
-      >
-        <Text style={styles.backToLoginText}>Kembali ke Login</Text>
       </TouchableOpacity>
     </View>
   );
@@ -92,14 +83,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: "#1EB854",
-  },
-  backToLoginButton: {
-    marginTop: 20,
-  },
-  backToLoginText: {
-    fontSize: 16,
-    fontWeight: "500",
-    color: "#fff",
-    textDecorationLine: "underline",
   },
 });

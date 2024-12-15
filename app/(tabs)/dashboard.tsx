@@ -1,115 +1,85 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-} from 'react-native';
+import React from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { FontAwesome } from "@expo/vector-icons"; // Pustaka ikon
 
-export default function DashboardScreen({ navigation }) {
-  const handleLogout = () => {
-    // Logika untuk logout (hapus token, reset state, dll.)
-    navigation.replace('Login'); // Arahkan kembali ke halaman login
-  };
-
+export default function DashboardScreen() {
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.title}>Dashboard Guru</Text>
-        <Text style={styles.subtitle}>Selamat Datang, [Nama Guru]</Text>
+        <Text style={styles.username}>MOH. ARDILAN</Text>
       </View>
 
-      {/* Menu Items */}
-      <View style={styles.menuContainer}>
-        {/* Absensi */}
-        <TouchableOpacity
-          style={styles.menuItem}
-          onPress={() => navigation.navigate('Absensi')}>
-          <Text style={styles.menuText}>Absensi</Text>
+      {/* Grid Menu */}
+      <View style={styles.gridContainer}>
+        <TouchableOpacity style={styles.gridItem}>
+          <FontAwesome name="search" size={24} color="#fff" />
+          <Text style={styles.gridText}>Jadwal Pelajaran</Text>
         </TouchableOpacity>
-
-        {/* Jadwal */}
-        <TouchableOpacity
-          style={styles.menuItem}
-          onPress={() => navigation.navigate('Jadwal')}>
-          <Text style={styles.menuText}>Jadwal Pelajaran</Text>
+        <TouchableOpacity style={styles.gridItem}>
+          <FontAwesome name="book" size={24} color="#fff" />
+          <Text style={styles.gridText}>Data Siswa</Text>
         </TouchableOpacity>
-
-        {/* Rekap Nilai */}
-        <TouchableOpacity
-          style={styles.menuItem}
-          onPress={() => navigation.navigate('RekapNilai')}>
-          <Text style={styles.menuText}>Rekap Nilai</Text>
+        <TouchableOpacity style={styles.gridItem}>
+          <FontAwesome name="user" size={24} color="#fff" />
+          <Text style={styles.gridText}>Data Guru</Text>
         </TouchableOpacity>
-
-        {/* Pengumuman */}
-        <TouchableOpacity
-          style={styles.menuItem}
-          onPress={() => navigation.navigate('Pengumuman')}>
-          <Text style={styles.menuText}>Pengumuman</Text>
+        <TouchableOpacity style={styles.gridItem}>
+          <FontAwesome name="calendar" size={24} color="#fff" />
+          <Text style={styles.gridText}>Kalender</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.gridItem}>
+          <FontAwesome name="check" size={24} color="#fff" />
+          <Text style={styles.gridText}>Nilai Siswa</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.gridItem}>
+          <FontAwesome name="question" size={24} color="#fff" />
+          <Text style={styles.gridText}>Pusat Bantuan</Text>
         </TouchableOpacity>
       </View>
-
-      {/* Logout */}
-      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-        <Text style={styles.logoutText}>Logout</Text>
-      </TouchableOpacity>
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
-    backgroundColor: '#1EB854',
-    padding: 20,
-    alignItems: 'center',
+    flex: 1,
+    backgroundColor: "#1EB854",
   },
   header: {
-    marginBottom: 30,
-    alignItems: 'center',
+    backgroundColor: "#1EB854",
+    padding: 20,
+    alignItems: "center",
   },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#fff',
-    marginBottom: 5,
+  username: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#fff",
   },
-  subtitle: {
-    fontSize: 16,
-    color: '#fff',
+  gridContainer: {
+    flex: 1,
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 20,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
   },
-  menuContainer: {
-    width: '100%',
-    marginTop: 20,
-  },
-  menuItem: {
-    backgroundColor: '#fff',
-    padding: 15,
+  gridItem: {
+    backgroundColor: "#1EB854",
+    width: "40%",
+    height: 90,
     borderRadius: 10,
-    marginVertical: 10,
-    alignItems: 'center',
-    borderWidth: 1.5,
-    borderColor: '#ccc',
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 20,
   },
-  menuText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#1EB854',
-  },
-  logoutButton: {
-    backgroundColor: '#FF4D4D',
-    padding: 15,
-    borderRadius: 10,
-    marginTop: 30,
-    alignItems: 'center',
-    width: '100%',
-  },
-  logoutText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#fff',
+  gridText: {
+    marginTop: 10,
+    fontSize: 12,
+    fontWeight: "bold",
+    color: "#fff",
+    textAlign: "center",
   },
 });

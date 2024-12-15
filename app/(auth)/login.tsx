@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import React, { useState } from "react";
 import {
   View,
@@ -5,84 +6,76 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableWithoutFeedback,
-  Keyboard,
+  Image,
+  SafeAreaView,
 } from "react-native";
-import { router } from "expo-router";
 
-const Login = () => {
-  const [username, setUsername] = useState("");
+export default function LoginScreen() {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
-    if (!username.trim() || !password.trim()) {
-      Alert.alert("Error", "Username dan Password harus diisi!");
+    if (!email || !password) {
+      alert("Harap isi semua kolom.");
       return;
     }
-    router.replace("/(tabs)");
+    alert(`Login berhasil untuk: ${email}`);
+    router.push("/dashboard"); 
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-      >
-        <View style={styles.header}>
-          <Text style={styles.welcomeText}>Selamat Datang,</Text>
-          <Text style={styles.title}>E-ABSENSI KITA</Text>
-          <Text style={styles.subtitle}>
-            Absensi Guru SMA Bustanul Mubtadiin Pangurayan-Propopo-Pamekasan
-          </Text>
-        </View>
+    <SafeAreaView style={styles.container}>
+      <Image source={require("@/assets/images/Splash.png")} style={styles.logo} />
+      <Text style={styles.welcomeText}>Selamat Datang</Text>
+      <Text style={styles.title}>E-ABSENSI KITA</Text>
 
-        <TextInput
-          style={styles.input}
-          placeholder="Masukkan Username"
-          placeholderTextColor="#B0B0B0"
-          secureTextEntry
-          value={username}
-          onChangeText={(text) => setUsername(text)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Masukkan Password"
-          placeholderTextColor="#B0B0B0"
-          secureTextEntry
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-        />
+      {/* Input Email */}
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        placeholderTextColor="#B0B0B0"
+        keyboardType="email-address"
+        value={email}
+        onChangeText={setEmail}
+      />
 
-        <TouchableOpacity
-          style={styles.loginButton}
-          onPress={() => router.replace("/register")}
+      {/* Input Password */}
+      <TextInput
+        style={styles.input}
+        placeholder="Kata Sandi"
+        placeholderTextColor="#B0B0B0"
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+      />
+
+      {/* Login Button */}
+      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+        <Text style={styles.loginButtonText}>MASUK</Text>
+      </TouchableOpacity>
+
+      {/* Navigation to Register */}
+      <Text style={styles.registerText}>
+        Belum punya akun?{" "}
+        <Text
+          style={styles.linkText}
+          onPress={() => router.replace("/(auth)/register")}
         >
-          <Text style={styles.loginButtonText}>LOGIN</Text>
-        </TouchableOpacity>
-
-        <Text style={styles.registerText}>
-          Belum punya akun?{" "}
-          <Text
-            style={styles.linkText}
-            onPress={() => router.replace("/register")}
-          >
-            Daftar
-          </Text>
+          <Text style={styles.boldText}>Daftar</Text>
         </Text>
+      </Text>
 
-        <TouchableOpacity
-          onPress={() => router.replace("/lupapassword")}
-          style={styles.forgotPassword}
-        >
-          <Text style={styles.forgotPasswordText}>Lupa Password?</Text>
-        </TouchableOpacity>
-      </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
+      {/* Navigation to Forgot Password */}
+      <TouchableOpacity
+        onPress={() => router.replace("/(auth)/lupapassword")}
+      >
+        <Text style={styles.forgotPasswordText}>
+          <Text style={styles.boldText}>Lupa Password?</Text>
+        </Text>
+      </TouchableOpacity>
+    </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -92,48 +85,41 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 20,
   },
-  header: {
-    alignItems: "center",
-    marginBottom: 40,
+  logo: {
+    width: 100,
+    height: 100,
+    marginBottom: 20,
+    tintColor: "#fff", // Membuat logo berwarna putih
   },
   welcomeText: {
     fontSize: 20,
     fontWeight: "600",
     color: "#fff",
+    marginBottom: 5,
   },
   title: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: "bold",
     color: "#fff",
-    marginVertical: 5,
-  },
-  subtitle: {
-    fontSize: 14,
-    textAlign: "center",
-    color: "#fff",
-    marginTop: 10,
+    marginBottom: 30,
   },
   input: {
-    width: "100%",
-    height: 55,
+    width: "90%", // Diperkecil dari "100%"
+    height: 50,
     backgroundColor: "#fff",
-    borderRadius: 10,
+    borderRadius: 8,
     paddingHorizontal: 15,
     fontSize: 16,
     marginVertical: 10,
-    borderColor: "#ccc",
-    borderWidth: 1,
   },
   loginButton: {
-    width: "100%",
-    height: 55,
+    width: "90%", // Diperkecil dari "100%"
+    height: 50,
     backgroundColor: "#fff",
-    borderRadius: 10,
+    borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 20,
-    borderColor: "#1EB854",
-    borderWidth: 1.5,
   },
   loginButtonText: {
     fontSize: 18,
@@ -143,22 +129,17 @@ const styles = StyleSheet.create({
   registerText: {
     marginTop: 20,
     color: "#fff",
-    fontSize: 14,
   },
   linkText: {
-    color: "#FFF",
-    fontWeight: "bold",
-    textDecorationLine: "underline",
-  },
-  forgotPassword: {
-    marginTop: 15,
-  },
-  forgotPasswordText: {
-    fontSize: 14,
-    fontWeight: "500",
     color: "#fff",
     textDecorationLine: "underline",
   },
+  forgotPasswordText: {
+    marginTop: 10,
+    color: "#fff",
+    textDecorationLine: "underline",
+  },
+  boldText: {
+    fontWeight: "bold",
+  },
 });
-
-export default Login;
