@@ -6,10 +6,9 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons"; // Pastikan Anda memiliki ikon ini
+import { Ionicons } from "@expo/vector-icons";
 
 const JadwalPelajaranScreen = ({ navigation }) => {
-  // Data jadwal pelajaran
   const [jadwal, setJadwal] = useState([
     {
       id: "1",
@@ -83,10 +82,9 @@ const JadwalPelajaranScreen = ({ navigation }) => {
       {/* Tombol Kembali */}
       <TouchableOpacity
         style={styles.backButton}
-        onPress={() => navigation.goBack()} // Arahkan ke halaman sebelumnya
+        onPress={() => navigation.goBack()}
       >
         <Ionicons name="chevron-back" size={24} color="#1EB854" />
-        <Text style={styles.backText}>Kembali</Text>
       </TouchableOpacity>
 
       {/* Judul */}
@@ -97,8 +95,8 @@ const JadwalPelajaranScreen = ({ navigation }) => {
         data={jadwal}
         keyExtractor={(item) => item.id}
         renderItem={renderJadwal}
-        numColumns={2} // Membuat tampilan grid 2 kolom
-        columnWrapperStyle={styles.row} // Gaya baris untuk merapikan grid
+        numColumns={2}
+        columnWrapperStyle={styles.row}
         contentContainerStyle={styles.listContainer}
       />
     </View>
@@ -112,14 +110,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   backButton: {
-    flexDirection: "row",
-    alignItems: "center",
     marginBottom: 20,
-  },
-  backText: {
-    fontSize: 16,
-    color: "#1EB854",
-    marginLeft: 5,
   },
   title: {
     fontSize: 24,
@@ -132,27 +123,27 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   row: {
-    justifyContent: "space-between", // Merapikan grid secara horizontal
+    justifyContent: "space-between",
     marginBottom: 15,
   },
   card: {
     flex: 1,
-    backgroundColor: "#fff",
-    padding: 10,
+    backgroundColor: "#1EB854",
+    padding: 15,
     borderRadius: 10,
+    marginHorizontal: 5,
     elevation: 3,
-    marginHorizontal: 5, // Spasi antar kartu
   },
   hari: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#555",
+    color: "#fff",
     textAlign: "center",
     marginBottom: 10,
   },
   mapel: {
     fontSize: 14,
-    color: "#555",
+    color: "#fff",
     marginBottom: 5,
   },
 });

@@ -7,6 +7,8 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 
 const RiwayatKehadiranScreen = () => {
   // Contoh data riwayat absensi
@@ -63,6 +65,16 @@ const RiwayatKehadiranScreen = () => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => {
+          router.push("/dashboard");
+          }}
+        >
+          <Ionicons name="chevron-back" size={28} color="#1EB854" />
+        </TouchableOpacity>
+      </View>
       <Text style={styles.title}>Riwayat Kehadiran</Text>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <FlatList
@@ -71,12 +83,6 @@ const RiwayatKehadiranScreen = () => {
           renderItem={renderItem}
           contentContainerStyle={styles.listContainer}
         />
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => console.log("Kembali ke Beranda")}
-        >
-          <Text style={styles.backText}>Kembali</Text>
-        </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -87,6 +93,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f4f4f4",
     padding: 20,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 20,
   },
   title: {
     fontSize: 24,
@@ -125,16 +136,8 @@ const styles = StyleSheet.create({
     color: "#1EB854",
   },
   backButton: {
-    marginTop: 20,
-    backgroundColor: "#1EB854",
-    padding: 15,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  backText: {
-    fontSize: 16,
-    color: "#fff",
-    fontWeight: "bold",
+    padding: 10,
+    borderRadius: 50,
   },
 });
 
