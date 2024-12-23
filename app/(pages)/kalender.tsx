@@ -1,117 +1,62 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Calendar } from "react-native-calendars";
+import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons"; // Ikon untuk tombol kembali
 
-const KalenderScreen = () => {
-  // Data kalender (bulan dan hari libur)
-  const bulan = [
-    {
-      id: "1",
-      nama: "Januari",
-      hariLibur: [{ tanggal: 1, keterangan: "Tahun Baru" }],
-    },
-    { id: "2", nama: "Februari", hariLibur: [] },
-    {
-      id: "3",
-      nama: "Maret",
-      hariLibur: [{ tanggal: 25, keterangan: "Hari Raya Nyepi" }],
-    },
-    {
-      id: "4",
-      nama: "April",
-      hariLibur: [{ tanggal: 10, keterangan: "Libur Sekolah" }],
-    },
-    { id: "5", nama: "Mei", hariLibur: [] },
-    {
-      id: "6",
-      nama: "Juni",
-      hariLibur: [{ tanggal: 1, keterangan: "Hari Lahir Pancasila" }],
-    },
-  ];
+const KalenderSekolah = () => {
+  const [selectedDate, setSelectedDate] = useState("");
+  const navigation = useNavigation();
 
-  // State bulan terpilih
-  const [bulanTerpilih, setBulanTerpilih] = useState(bulan[0]);
-
-  // Render daftar hari
-  const renderHari = () => {
-    const hari = Array.from({ length: 31 }, (_, i) => i + 1); // Angka 1-31
-    return (
-      <FlatList
-        data={hari}
-        keyExtractor={(item) => item.toString()}
-        numColumns={7}
-        renderItem={({ item }) => {
-          const libur = bulanTerpilih.hariLibur.find(
-            (hl) => hl.tanggal === item
-          );
-          return (
-            <TouchableOpacity
-              style={[styles.hariBox, libur ? styles.hariLibur : null]}
-              onPress={() => {
-                if (libur) {
-                  Alert.alert(
-                    "Hari Libur",
-                    `${libur.keterangan} (Tanggal ${item})`
-                  );
-                } else {
-                  Alert.alert(
-                    "Tanggal",
-                    `Tanggal ${item} ${bulanTerpilih.nama}`
-                  );
-                }
-              }}
-            >
-              <Text
-                style={[styles.hariText, libur ? styles.hariLiburText : null]}
-              >
-                {item}
-              </Text>
-            </TouchableOpacity>
-          );
-        }}
-      />
-    );
+  const onDayPress = (day) => {
+    setSelectedDate(day.dateString);
   };
 
   return (
     <View style={styles.container}>
-      {/* Judul Halaman */}
+      {/* Tombol Kembali */}
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => navigation.goBack()}
+      >
+        <Ionicons name="chevron-back" size={24} color="#1EB854" />
+        <Text style={styles.backText}>Kembali</Text>
+      </TouchableOpacity>
+
+      {/* Judul */}
       <Text style={styles.title}>Kalender Sekolah</Text>
 
-      {/* Pilihan Bulan */}
-      <FlatList
-        horizontal
-        data={bulan}
-        keyExtractor={(item) => item.id}
-        showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            style={[
-              styles.bulanBox,
-              bulanTerpilih.id === item.id ? styles.bulanBoxSelected : null,
-            ]}
-            onPress={() => setBulanTerpilih(item)}
-          >
-            <Text
-              style={[
-                styles.bulanText,
-                bulanTerpilih.id === item.id ? styles.bulanTextSelected : null,
-              ]}
-            >
-              {item.nama}
-            </Text>
-          </TouchableOpacity>
-        )}
+      {/* Komponen Kalender */}
+      <Calendar
+        minDate={"2000-01-01"}
+        maxDate={"2026-12-31"}
+        markedDates={{
+          [selectedDate]: { selected: true, selectedColor: "#1EB854" },
+        }}
+        onDayPress={onDayPress}
+        theme={{
+          backgroundColor: "transparent",
+          calendarBackground: "#FFFFFF",
+          textSectionTitleColor: "#1EB854",
+          selectedDayBackgroundColor: "#1EB854",
+          selectedDayTextColor: "#FFFFFF",
+          todayTextColor: "#FF7043",
+          dayTextColor: "#000000",
+          arrowColor: "#1EB854",
+          monthTextColor: "#1EB854",
+          textDayFontWeight: "500",
+          textMonthFontWeight: "bold",
+          textDayHeaderFontWeight: "500",
+          textDayFontSize: 16,
+          textMonthFontSize: 20,
+          textDayHeaderFontSize: 14,
+        }}
       />
 
-      {/* Grid Hari */}
-      <View style={styles.kalender}>{renderHari()}</View>
+      {/* Tanggal yang Dipilih */}
+      {selectedDate ? (
+        <Text style={styles.selectedDate}>Tanggal dipilih: {selectedDate}</Text>
+      ) : null}
     </View>
   );
 };
@@ -119,58 +64,32 @@ const KalenderScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f4f4f4",
+    backgroundColor: "#F4F4F4",
     padding: 20,
+  },
+  backButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  backText: {
+    fontSize: 16,
+    color: "#1EB854",
+    marginLeft: 5,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#1EB854",
     textAlign: "center",
+    color: "#1EB854",
     marginBottom: 20,
   },
-  bulanBox: {
-    padding: 10,
-    marginRight: 10,
-    borderRadius: 10,
-    backgroundColor: "#fff",
-    elevation: 3,
-  },
-  bulanBoxSelected: {
-    backgroundColor: "#1EB854",
-  },
-  bulanText: {
-    fontSize: 16,
-    color: "#555",
-  },
-  bulanTextSelected: {
-    color: "#fff",
-    fontWeight: "bold",
-  },
-  kalender: {
+  selectedDate: {
     marginTop: 20,
-  },
-  hariBox: {
-    width: 45,
-    height: 45,
-    margin: 5,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 5,
-    backgroundColor: "#fff",
-    elevation: 2,
-  },
-  hariLibur: {
-    backgroundColor: "#FFCDD2",
-  },
-  hariText: {
-    fontSize: 14,
-    color: "#555",
-  },
-  hariLiburText: {
-    fontWeight: "bold",
-    color: "#FF0000",
+    fontSize: 18,
+    color: "#000000",
+    textAlign: "center",
   },
 });
 
-export default KalenderScreen;
+export default KalenderSekolah;
