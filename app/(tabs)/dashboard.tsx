@@ -28,7 +28,11 @@ const HomeScreen = () => {
               <Text style={styles.userRole}>E-ABSENSI KITA</Text>
             </View>
           </View>
-          <TouchableOpacity style={styles.notificationIcon}>
+          <TouchableOpacity style={styles.notificationIcon}
+          onPress={() => {
+                    router.push("/notifikasi");
+                  }}
+          >
             <MaterialIcons name="notifications" size={25} color="#1EB854" />
           </TouchableOpacity>
         </View>
@@ -39,10 +43,10 @@ const HomeScreen = () => {
         {[
           { label: "Absensi Harian", icon: "check-circle", route: "/absensi" },
           { label: "Riwayat Kehadiran", icon: "calendar", route: "/riwayat" },
-          { label: "Pengajuan Izin", icon: "file-text", route: null },
+          { label: "Pengajuan cuti", icon: "file-text", route: "/pengajuancuti" },
           { label: "Data Guru", icon: "users", route: "/dataguru" },
           { label: "Jadwal Pelajaran", icon: "schedule", route: "/jadwalpelajaran" },
-          { label: "Kalender", icon: "calendar-o", route: null },
+          { label: "Kalender", icon: "calendar-o", route: "/kalender"},
         ].map((item, index) => (
           <TouchableOpacity
             key={index}
